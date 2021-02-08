@@ -443,7 +443,6 @@ class ExtensionMultiface : virtual public ExtensionIf {
   void add(::std::shared_ptr<ExtensionIf> iface) {
     ifaces_.push_back(iface);
   }
-
  public:
   void ping(ExtensionStatus& _return) {
     size_t sz = ifaces_.size();

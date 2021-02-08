@@ -1273,6 +1273,266 @@ uint32_t ExtensionManager_getQueryColumns_presult::read(::apache::thrift::protoc
   return xfer;
 }
 
+ExtensionManager_streamEvents_args::
+    ~ExtensionManager_streamEvents_args() noexcept {}
+
+uint32_t ExtensionManager_streamEvents_args::read(
+    ::apache::thrift::protocol::TProtocol* iprot) {
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+  while (true) {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid) {
+    case 1:
+      if (ftype == ::apache::thrift::protocol::T_STRING) {
+        xfer += iprot->readString(this->name);
+        this->__isset.name = true;
+      } else {
+        xfer += iprot->skip(ftype);
+      }
+      break;
+    case 2:
+      if (ftype == ::apache::thrift::protocol::T_LIST) {
+        {
+          this->events.clear();
+          uint32_t _size107;
+          ::apache::thrift::protocol::TType _etype110;
+          xfer += iprot->readListBegin(_etype110, _size107);
+          this->events.resize(_size107);
+          uint32_t _i111;
+          for (_i111 = 0; _i111 < _size107; ++_i111) {
+            {
+              this->events[_i111].clear();
+              uint32_t _size112;
+              ::apache::thrift::protocol::TType _ktype113;
+              ::apache::thrift::protocol::TType _vtype114;
+              xfer += iprot->readMapBegin(_ktype113, _vtype114, _size112);
+              uint32_t _i116;
+              for (_i116 = 0; _i116 < _size112; ++_i116) {
+                std::string _key117;
+                xfer += iprot->readString(_key117);
+                std::string& _val118 = this->events[_i111][_key117];
+                xfer += iprot->readString(_val118);
+              }
+              xfer += iprot->readMapEnd();
+            }
+          }
+          xfer += iprot->readListEnd();
+        }
+        this->__isset.events = true;
+      } else {
+        xfer += iprot->skip(ftype);
+      }
+      break;
+    default:
+      xfer += iprot->skip(ftype);
+      break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t ExtensionManager_streamEvents_args::write(
+    ::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("ExtensionManager_streamEvents_args");
+
+  xfer +=
+      oprot->writeFieldBegin("name", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->name);
+  xfer += oprot->writeFieldEnd();
+
+  xfer +=
+      oprot->writeFieldBegin("events", ::apache::thrift::protocol::T_LIST, 2);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_MAP,
+                                  static_cast<uint32_t>(this->events.size()));
+    std::vector<std::map<std::string, std::string>>::const_iterator _iter119;
+    for (_iter119 = this->events.begin(); _iter119 != this->events.end();
+         ++_iter119) {
+      {
+        xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING,
+                                     ::apache::thrift::protocol::T_STRING,
+                                     static_cast<uint32_t>((*_iter119).size()));
+        std::map<std::string, std::string>::const_iterator _iter120;
+        for (_iter120 = (*_iter119).begin(); _iter120 != (*_iter119).end();
+             ++_iter120) {
+          xfer += oprot->writeString(_iter120->first);
+          xfer += oprot->writeString(_iter120->second);
+        }
+        xfer += oprot->writeMapEnd();
+      }
+    }
+    xfer += oprot->writeListEnd();
+  }
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+ExtensionManager_streamEvents_pargs::
+    ~ExtensionManager_streamEvents_pargs() noexcept {}
+
+uint32_t ExtensionManager_streamEvents_pargs::write(
+    ::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("ExtensionManager_streamEvents_pargs");
+
+  xfer +=
+      oprot->writeFieldBegin("name", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString((*(this->name)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer +=
+      oprot->writeFieldBegin("events", ::apache::thrift::protocol::T_LIST, 2);
+  {
+    xfer +=
+        oprot->writeListBegin(::apache::thrift::protocol::T_MAP,
+                              static_cast<uint32_t>((*(this->events)).size()));
+    std::vector<std::map<std::string, std::string>>::const_iterator _iter121;
+    for (_iter121 = (*(this->events)).begin();
+         _iter121 != (*(this->events)).end();
+         ++_iter121) {
+      {
+        xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING,
+                                     ::apache::thrift::protocol::T_STRING,
+                                     static_cast<uint32_t>((*_iter121).size()));
+        std::map<std::string, std::string>::const_iterator _iter122;
+        for (_iter122 = (*_iter121).begin(); _iter122 != (*_iter121).end();
+             ++_iter122) {
+          xfer += oprot->writeString(_iter122->first);
+          xfer += oprot->writeString(_iter122->second);
+        }
+        xfer += oprot->writeMapEnd();
+      }
+    }
+    xfer += oprot->writeListEnd();
+  }
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+ExtensionManager_streamEvents_result::
+    ~ExtensionManager_streamEvents_result() noexcept {}
+
+uint32_t ExtensionManager_streamEvents_result::read(
+    ::apache::thrift::protocol::TProtocol* iprot) {
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+  while (true) {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid) {
+    case 0:
+      if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+        xfer += this->success.read(iprot);
+        this->__isset.success = true;
+      } else {
+        xfer += iprot->skip(ftype);
+      }
+      break;
+    default:
+      xfer += iprot->skip(ftype);
+      break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t ExtensionManager_streamEvents_result::write(
+    ::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("ExtensionManager_streamEvents_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin(
+        "success", ::apache::thrift::protocol::T_STRUCT, 0);
+    xfer += this->success.write(oprot);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+ExtensionManager_streamEvents_presult::
+    ~ExtensionManager_streamEvents_presult() noexcept {}
+
+uint32_t ExtensionManager_streamEvents_presult::read(
+    ::apache::thrift::protocol::TProtocol* iprot) {
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+  while (true) {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid) {
+    case 0:
+      if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+        xfer += (*(this->success)).read(iprot);
+        this->__isset.success = true;
+      } else {
+        xfer += iprot->skip(ftype);
+      }
+      break;
+    default:
+      xfer += iprot->skip(ftype);
+      break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
 void ExtensionManagerClient::extensions(InternalExtensionList& _return)
 {
   send_extensions();
@@ -1620,6 +1880,68 @@ void ExtensionManagerClient::recv_getQueryColumns(ExtensionResponse& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "getQueryColumns failed: unknown result");
 }
 
+void ExtensionManagerClient::streamEvents(
+    ExtensionStatus& _return,
+    const std::string& name,
+    const ExtensionPluginResponse& events) {
+  send_streamEvents(name, events);
+  recv_streamEvents(_return);
+}
+
+void ExtensionManagerClient::send_streamEvents(
+    const std::string& name, const ExtensionPluginResponse& events) {
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin(
+      "streamEvents", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  ExtensionManager_streamEvents_pargs args;
+  args.name = &name;
+  args.events = &events;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+void ExtensionManagerClient::recv_streamEvents(ExtensionStatus& _return) {
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("streamEvents") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  ExtensionManager_streamEvents_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    // _return pointer has now been filled
+    return;
+  }
+  throw ::apache::thrift::TApplicationException(
+      ::apache::thrift::TApplicationException::MISSING_RESULT,
+      "streamEvents failed: unknown result");
+}
+
 bool ExtensionManagerProcessor::dispatchCall(::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, const std::string& fname, int32_t seqid, void* callContext) {
   ProcessMap::iterator pfn;
   pfn = processMap_.find(fname);
@@ -1951,6 +2273,67 @@ void ExtensionManagerProcessor::process_getQueryColumns(int32_t seqid, ::apache:
 
   if (this->eventHandler_.get() != NULL) {
     this->eventHandler_->postWrite(ctx, "ExtensionManager.getQueryColumns", bytes);
+  }
+}
+
+void ExtensionManagerProcessor::process_streamEvents(
+    int32_t seqid,
+    ::apache::thrift::protocol::TProtocol* iprot,
+    ::apache::thrift::protocol::TProtocol* oprot,
+    void* callContext) {
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("ExtensionManager.streamEvents",
+                                          callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(
+      this->eventHandler_.get(), ctx, "ExtensionManager.streamEvents");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "ExtensionManager.streamEvents");
+  }
+
+  ExtensionManager_streamEvents_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "ExtensionManager.streamEvents", bytes);
+  }
+
+  ExtensionManager_streamEvents_result result;
+  try {
+    iface_->streamEvents(result.success, args.name, args.events);
+    result.__isset.success = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "ExtensionManager.streamEvents");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin(
+        "streamEvents", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "ExtensionManager.streamEvents");
+  }
+
+  oprot->writeMessageBegin(
+      "streamEvents", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "ExtensionManager.streamEvents", bytes);
   }
 }
 
@@ -2474,5 +2857,95 @@ void ExtensionManagerConcurrentClient::recv_getQueryColumns(ExtensionResponse& _
   } // end while(true)
 }
 
+void ExtensionManagerConcurrentClient::streamEvents(
+    ExtensionStatus& _return,
+    const std::string& name,
+    const ExtensionPluginResponse& events) {
+  int32_t seqid = send_streamEvents(name, events);
+  recv_streamEvents(_return, seqid);
+}
+
+int32_t ExtensionManagerConcurrentClient::send_streamEvents(
+    const std::string& name, const ExtensionPluginResponse& events) {
+  int32_t cseqid = this->sync_->generateSeqId();
+  ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
+  oprot_->writeMessageBegin(
+      "streamEvents", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  ExtensionManager_streamEvents_pargs args;
+  args.name = &name;
+  args.events = &events;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+
+  sentry.commit();
+  return cseqid;
+}
+
+void ExtensionManagerConcurrentClient::recv_streamEvents(
+    ExtensionStatus& _return, const int32_t seqid) {
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  // the read mutex gets dropped and reacquired as part of waitForWork()
+  // The destructor of this sentry wakes up other clients
+  ::apache::thrift::async::TConcurrentRecvSentry sentry(this->sync_.get(),
+                                                        seqid);
+
+  while (true) {
+    if (!this->sync_->getPending(fname, mtype, rseqid)) {
+      iprot_->readMessageBegin(fname, mtype, rseqid);
+    }
+    if (seqid == rseqid) {
+      if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+        ::apache::thrift::TApplicationException x;
+        x.read(iprot_);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+        sentry.commit();
+        throw x;
+      }
+      if (mtype != ::apache::thrift::protocol::T_REPLY) {
+        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+      }
+      if (fname.compare("streamEvents") != 0) {
+        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+
+        // in a bad state, don't commit
+        using ::apache::thrift::protocol::TProtocolException;
+        throw TProtocolException(TProtocolException::INVALID_DATA);
+      }
+      ExtensionManager_streamEvents_presult result;
+      result.success = &_return;
+      result.read(iprot_);
+      iprot_->readMessageEnd();
+      iprot_->getTransport()->readEnd();
+
+      if (result.__isset.success) {
+        // _return pointer has now been filled
+        sentry.commit();
+        return;
+      }
+      // in a bad state, don't commit
+      throw ::apache::thrift::TApplicationException(
+          ::apache::thrift::TApplicationException::MISSING_RESULT,
+          "streamEvents failed: unknown result");
+    }
+    // seqid != rseqid
+    this->sync_->updatePending(fname, mtype, rseqid);
+
+    // this will temporarily unlock the readMutex, and let other clients get
+    // work done
+    this->sync_->waitForWork(seqid);
+  } // end while(true)
+}
 }} // namespace
 
