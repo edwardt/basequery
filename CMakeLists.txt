@@ -29,7 +29,7 @@ include(cmake/packaging.cmake)
 if(DEFINED PLATFORM_LINUX AND "${CMAKE_VERSION}" VERSION_GREATER_EQUAL "3.18.0")
   if(OSQUERY_IGNORE_CMAKE_MAX_VERSION_CHECK)
     message(WARNING
-      "CPack contained in CMake version 3.18 and newer generates RPM packages that won't install correctly on some distributions. " 
+      "CPack contained in CMake version 3.18 and newer generates RPM packages that won't install correctly on some distributions. "
       "You are using version ${CMAKE_VERSION} which has the bug, remember to use version 3.17.5 if a RPM package has to be generated.")
   else()
     message(FATAL_ERROR
@@ -106,64 +106,28 @@ endfunction()
 
 function(importLibraries)
   set(library_descriptor_list
-    "Linux,Darwin:augeas"
     "Linux,Darwin,Windows:boost"
     "Linux,Darwin,Windows:bzip2"
     "Linux,Darwin,Windows:gflags"
     "Linux,Darwin,Windows:glog"
     "Linux,Darwin,Windows:googletest"
     "Linux,Darwin,Windows:libarchive"
-    "Linux:libaudit"
-    "Linux:libcryptsetup"
-    "Linux:libdevmapper"
-    "Linux:libelfin"
-    "Linux:libgcrypt"
-    "Linux:libgpg-error"
-    "Linux:libiptables"
-    "Linux,Darwin:libmagic"
     "Linux,Darwin,Windows:librdkafka"
-    "Linux:librpm"
-    "Linux:libudev"
     "Linux,Darwin,Windows:libxml2"
     "Linux,Darwin,Windows:linenoise-ng"
-    "Linux,Darwin:lldpd"
     "Linux,Darwin,Windows:lzma"
-    "Linux,Darwin:popt"
     "Linux,Darwin,Windows:rapidjson"
     "Linux,Darwin,Windows:rocksdb"
-    "Linux,Darwin,Windows:sleuthkit"
-    "Linux,Darwin:smartmontools"
     "Linux,Darwin,Windows:sqlite"
     "Linux,Darwin:ssdeep-cpp"
     "Linux,Darwin,Windows:thrift"
     "Linux:util-linux"
-    "Linux,Darwin,Windows:yara"
     "Linux,Darwin,Windows:zlib"
     "Linux,Darwin,Windows:zstd"
     "Linux,Darwin,Windows:openssl"
+    "Linux,Darwin,Windows:aws-sdk-cpp"
     "Linux,Darwin,Windows:icu"
-    "Linux:expat"
-    "Linux:dbus"
-    "Linux:libcap"
   )
-
-  if(OSQUERY_BUILD_BPF)
-    list(APPEND library_descriptor_list
-      "Linux:ebpfpub"
-    )
-  endif()
-
-  if(OSQUERY_BUILD_AWS)
-    list(APPEND library_descriptor_list
-      "Linux,Darwin,Windows:aws-sdk-cpp"
-    )
-  endif()
-
-  if(OSQUERY_BUILD_DPKG)
-    list(APPEND library_descriptor_list
-      "Linux:libdpkg"
-    )
-  endif()
 
   foreach(library_descriptor ${library_descriptor_list})
     # Expand the library descriptor
@@ -214,14 +178,7 @@ function(importLibraries)
       endif()
 
     else()
-      # In case we were trying to import ebpfpub, check whether the build option
-      # has been turned OFF automatically because the installed LLVM libraries
-      # were broken/not compatible
-      if(NOT OSQUERY_BUILD_BPF AND "${library}" STREQUAL "ebpfpub")
-        message(WARNING "ebpfpub could not correctly import the LLVM libraries. BPF support has been disabled")
-      else()
-        message(FATAL_ERROR "The '${library}' library was found but it couldn't be imported correctly")
-      endif()
+      message(FATAL_ERROR "The '${library}' library was found but it couldn't be imported correctly")
     endif()
   endforeach()
 endfunction()
